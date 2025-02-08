@@ -4,6 +4,6 @@
 ## Структура классов API
 ![docs](./docs/classes-API.drawio.svg)
 
-## Структура структуры брокера
+## Структура классов брокера
 ![docs](./docs/classes-broker.drawio.svg)
 
