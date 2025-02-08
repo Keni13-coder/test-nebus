@@ -7,8 +7,35 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
+gunicorn = "^23.0.0"
+uvicorn = "^0.34.0"
+fastapi = "^0.115.8"
+faststream = {extras = ["cli"], version = "^0.5.34"}
+pydantic = "^2.10.6"
+pydantic-settings = "^2.7.1"
+sqlalchemy = "^2.0.38"
+asyncpg = "^0.30.0"
+alembic = "^1.14.1"
 
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+pytest-asyncio = "^0.25.3"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_marker = "asyncio"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_functions = ["test_*"]
+python_classes = ["Test*"]
+addopts = "-v -s --tb=short"
+markers = [
+    "asyncio: marks tests as asyncio (deselect with '-m \"not asyncio\"')",
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]
