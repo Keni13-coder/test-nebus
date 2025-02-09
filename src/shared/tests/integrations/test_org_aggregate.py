@@ -9,7 +9,7 @@ from src.shared.models.office import Office, Geo
 from src.shared.models.work import Category, Work
 
 
-@pytest.mark.asyncio(loop_scope="session")
+@pytest.mark.asyncio(loop_scope='module')
 async def test_org_aggregate(session):
     org_aggregate = OrgAggregate(session)
     org_id = await org_aggregate.create_organization(

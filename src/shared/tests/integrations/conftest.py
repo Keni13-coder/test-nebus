@@ -4,7 +4,7 @@ from src.shared.database.base import get_session
 from sqlalchemy import text
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 async def session():
     async with get_session() as session:
         yield session
