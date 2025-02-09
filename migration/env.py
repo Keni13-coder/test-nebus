@@ -4,7 +4,11 @@ from logging.config import fileConfig
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
-
+from src.shared.config.settings import settings
+from src.shared.models.organization import Organization
+from src.shared.models.work import Work, Category
+from src.shared.models.office import Office, Geo
+from src.shared.models.base import Base
 from alembic import context
 
 # this is the Alembic Config object, which provides
@@ -20,8 +24,8 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
-
+target_metadata = Base.metadata
+url = settings.postgres_uri
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
@@ -40,7 +44,6 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -67,6 +70,7 @@ async def run_async_migrations() -> None:
 
     connectable = async_engine_from_config(
         config.get_section(config.config_ini_section, {}),
+        url=url,
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )

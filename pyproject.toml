@@ -16,6 +16,8 @@ pydantic-settings = "^2.7.1"
 sqlalchemy = "^2.0.38"
 asyncpg = "^0.30.0"
 alembic = "^1.14.1"
+geoalchemy2 = "^0.17.0"
+shapely = "^2.0.7"
 
 
 [tool.poetry.group.dev.dependencies]
