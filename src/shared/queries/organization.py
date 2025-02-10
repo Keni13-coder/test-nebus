@@ -158,14 +158,11 @@ class OrganizationQuery(BaseQuery):
     def __init__(self, builder: QueryBuilder):
         self._builder = builder
     
-    async def find_one(self, session: AsyncSession, **kwargs) -> OrganizationQueryO:
-        stmt = await self._builder(**kwargs)
-        result = await session.execute(stmt)
-        return result.scalar_one_or_none()
 
-    async def find_all(self, session: AsyncSession, **kwargs) -> list[OrganizationQueryO]:
+    async def find(self, session: AsyncSession, **kwargs) -> list[OrganizationQueryO]:
         stmt = await self._builder(**kwargs)
         result = await session.execute(stmt)
-        return result.scalars().all()
+        rows = result.mappings().all()
+        return [OrganizationQueryO.model_validate(row) for row in rows]
     
     

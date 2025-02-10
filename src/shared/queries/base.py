@@ -15,10 +15,7 @@ from src.shared.schemas.organization import (
 class BaseQuery(Protocol):
     _model: DeclarativeMeta
     
-    async def find_one(self, session: AsyncSession, **kwargs) -> Any:
-        ...
-    
-    async def find_all(self, session: AsyncSession, **kwargs) -> Any:
+    async def find(self, session: AsyncSession, **kwargs) -> Any:
         ...
         
 
