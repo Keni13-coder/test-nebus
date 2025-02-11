@@ -162,3 +162,6 @@ cython_debug/
 *.sql
 
 !.gitkeep
+
+# pgbouncer
+userlist.txt
