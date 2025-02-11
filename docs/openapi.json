@@ -1,0 +1,238 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/operations/find/": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "summary": "Find Organization",
+        "operationId": "find_organization_api_v1_operations_find__get",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "JSON-encoded query parameters. Must match exactly one schema format:\n\nPossible formats:\n- OrgIdQuery:\n  * org_id: integer - Идентификатор организации\n- OrgTitleQuery:\n  * org_title: string - Название организации\n- CategoryPathQuery:\n  * category_path: string - Иерархический путь категории\n- CategoryTitleQuery:\n  * category_title: string - Название категории\n- OfficeAddressQuery:\n  * office_address: string - Адрес офиса\n- GeoRadiusQuery:\n  * geo: any - Гео-данные для поиска\n  * radius: number - Радиус поиска в метрах\n- GeoBoxQuery:\n  * min_lon: number - Минимальная долгота\n  * min_lat: number - Минимальная широта\n  * max_lon: any - Максимальная долгота\n  * max_lat: any - Максимальная широта",
+              "examples": {
+                "example_orgidquery": {
+                  "summary": "Example for OrgIdQuery",
+                  "description": "org_id: Идентификатор организации",
+                  "value": "{\"org_id\": 1234567890}"
+                },
+                "example_orgtitlequery": {
+                  "summary": "Example for OrgTitleQuery",
+                  "description": "org_title: Название организации",
+                  "value": "{\"org_title\": \"\\u041e\\u041e\\u041e \\u0420\\u043e\\u0433\\u0430 \\u0438 \\u041a\\u043e\\u043f\\u044b\\u0442\\u0430\"}"
+                },
+                "example_categorypathquery": {
+                  "summary": "Example for CategoryPathQuery",
+                  "description": "category_path: Иерархический путь категории",
+                  "value": "[{\"category_path\": \"/category1\", \"summary\": \"\\u041a\\u0430\\u0442\\u0435\\u0433\\u043e\\u0440\\u0438\\u044f \\u043f\\u0435\\u0440\\u0432\\u043e\\u0433\\u043e \\u0443\\u0440\\u043e\\u0432\\u043d\\u044f\"}, {\"category_path\": \"/category1/subcategory1\", \"summary\": \"\\u041a\\u0430\\u0442\\u0435\\u0433\\u043e\\u0440\\u0438\\u044f \\u0432\\u0442\\u043e\\u0440\\u043e\\u0433\\u043e \\u0443\\u0440\\u043e\\u0432\\u043d\\u044f\"}, {\"category_path\": \"/category1/subcategory1/subsubcategory1\", \"summary\": \"\\u041a\\u0430\\u0442\\u0435\\u0433\\u043e\\u0440\\u0438\\u044f \\u0442\\u0440\\u0435\\u0442\\u044c\\u0435\\u0433\\u043e \\u0443\\u0440\\u043e\\u0432\\u043d\\u044f\"}]"
+                },
+                "example_categorytitlequery": {
+                  "summary": "Example for CategoryTitleQuery",
+                  "description": "category_title: Название категории",
+                  "value": "{\"category_title\": \"\\u041a\\u0430\\u0442\\u0435\\u0433\\u043e\\u0440\\u0438\\u044f 1\"}"
+                },
+                "example_officeaddressquery": {
+                  "summary": "Example for OfficeAddressQuery",
+                  "description": "office_address: Адрес офиса",
+                  "value": "{\"office_address\": \"\\u0433. \\u041c\\u043e\\u0441\\u043a\\u0432\\u0430, \\u0443\\u043b. \\u041f\\u0443\\u0448\\u043a\\u0438\\u043d\\u0430, \\u0434. 10\"}"
+                },
+                "example_georadiusquery": {
+                  "summary": "Example for GeoRadiusQuery",
+                  "description": "geo: Гео-данные для поиска\nradius: Радиус поиска в метрах",
+                  "value": "{\"geo\": {\"lat\": 55.7558, \"lon\": 37.6173}, \"radius\": 1000}"
+                },
+                "example_geoboxquery": {
+                  "summary": "Example for GeoBoxQuery",
+                  "description": "min_lon: Минимальная долгота\nmin_lat: Минимальная широта\nmax_lon: Максимальная долгота\nmax_lat: Максимальная широта",
+                  "value": "{\"max_lat\": 55.9, \"max_lon\": 37.7, \"min_lat\": 55.7, \"min_lon\": 37.5}"
+                }
+              },
+              "title": "Query"
+            },
+            "description": "JSON-encoded query parameters. Must match exactly one schema format:\n\nPossible formats:\n- OrgIdQuery:\n  * org_id: integer - Идентификатор организации\n- OrgTitleQuery:\n  * org_title: string - Название организации\n- CategoryPathQuery:\n  * category_path: string - Иерархический путь категории\n- CategoryTitleQuery:\n  * category_title: string - Название категории\n- OfficeAddressQuery:\n  * office_address: string - Адрес офиса\n- GeoRadiusQuery:\n  * geo: any - Гео-данные для поиска\n  * radius: number - Радиус поиска в метрах\n- GeoBoxQuery:\n  * min_lon: number - Минимальная долгота\n  * min_lat: number - Минимальная широта\n  * max_lon: any - Максимальная долгота\n  * max_lat: any - Максимальная широта"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешный поиск организаций",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrganizationQueryO"
+                  },
+                  "title": "Response 200 Find Organization Api V1 Operations Find  Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка валидации параметров запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка проверки подписи запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorResponse": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Описание ошибки"
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "ErrorResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "OrganizationQueryO": {
+        "properties": {
+          "org_title": {
+            "type": "string",
+            "title": "Org Title",
+            "description": "Название организации"
+          },
+          "phones": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Phones",
+            "description": "Телефоны организации"
+          },
+          "office_address": {
+            "type": "string",
+            "title": "Office Address",
+            "description": "Адрес офиса"
+          },
+          "categories_titles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Categories Titles",
+            "description": "Названия категорий"
+          }
+        },
+        "type": "object",
+        "required": [
+          "org_title",
+          "phones",
+          "office_address",
+          "categories_titles"
+        ],
+        "title": "OrganizationQueryO"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Signature"
+      }
+    }
+  }
+}
