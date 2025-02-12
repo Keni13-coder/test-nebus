@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     POSTGRES_HOST: str
     POSTGRES_PORT: int
+    PGBOUNCER_HOST: str = "my-pgbouncer"
+    PGBOUNCER_PORT: int = 6432
     EXTERNAL_HOST: bool = False
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
     POSTGRES_POOL_SIZE: int = 10
@@ -17,7 +19,10 @@ class Settings(BaseSettings):
     
     @property
     def postgres_uri(self) -> str:
-        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT if self.EXTERNAL_HOST else 5432}/{self.POSTGRES_DB}"
+        # Используем pgbouncer для приложения
+        host = self.PGBOUNCER_HOST if not self.EXTERNAL_HOST else self.POSTGRES_HOST
+        port = self.PGBOUNCER_PORT if not self.EXTERNAL_HOST else self.POSTGRES_PORT
+        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{host}:{port}/{self.POSTGRES_DB}"
     
 
 settings = Settings()
